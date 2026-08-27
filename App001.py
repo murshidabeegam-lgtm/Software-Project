@@ -13,7 +13,6 @@ from translation_core import process_frame
 st.set_page_config(page_title="viva la vida", layout="centered")
 
 # Initialize Text-to-Speech Engine
-engine = pyttsx3.init()
 
 def speak_text(text):
     """Generates audio bytes using gTTS and plays them via Streamlit audio player."""
