@@ -1,5 +1,6 @@
 import streamlit as st
-import pyttsx3
+from gtts import gTTS
+import io
 import os
 os.environ["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = "python"
 import cv2
@@ -15,10 +16,16 @@ st.set_page_config(page_title="viva la vida", layout="centered")
 engine = pyttsx3.init()
 
 def speak_text(text):
+    """Generates audio bytes using gTTS and plays them via Streamlit audio player."""
     if text.strip():
-        engine.say(text)
-        engine.runAndWait()
-
+        # Convert text to speech audio buffer
+        tts = gTTS(text=text, lang='en')
+        fp = io.BytesIO()
+        tts.write_to_fp(fp)
+        fp.seek(0)
+        
+        # Play audio in the Streamlit web browser
+        st.audio(fp, format='audio/mp3', autoplay=True)
 # Dark Theme UI Styling
 st.markdown("""
     <style>
